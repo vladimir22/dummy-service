@@ -14,30 +14,31 @@ jobs:
   build:
 
     runs-on: self-hosted ## my runner: https://github.com/vladimir22/dummy-service/settings/actions/runners
-
+    
+    
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
       with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build and push immage
-      run: |
-        ## Resovle image name
-        #pushd ./dummy-service
-        #IMAGE_NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)
-        #VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-        #IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-        #popd
-        
-        docker build .
-        
-        ## Push image
-        docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID:$VERSION
-        
-        VERSION=latest
-        docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID:$VERSION
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+#    - name: Login to DockerHub
+#      uses: docker/login-action@v1 
+#      with:
+#        username: ${{ secrets.DOCKERHUB_USERNAME }}
+#        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: vladimir22/dummy-service:latest
+    
