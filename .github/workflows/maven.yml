@@ -6,21 +6,21 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
- 
-env: ## here my envs
+
+## My ENV vars
+env:
   IMAGE_NAME: dummy-service
   
 jobs:
   build:
+    ## My runner is self-hosted: https://github.com/vladimir22/dummy-service/settings/actions/runners
+    runs-on: self-hosted ## run it locally: ~/actions-runner/run.sh
 
-    runs-on: self-hosted ## my runner: https://github.com/vladimir22/dummy-service/settings/actions/runners
-    
-    
     steps:
     - uses: actions/checkout@v3
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
+      uses: docker/setup-qemu-action@v1 ## https://github.com/qemu/qemu#qemu-readme
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1    
     - name: Login to GitHub Container Registry
@@ -30,15 +30,10 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-#    - name: Login to DockerHub
-#      uses: docker/login-action@v1 
-#      with:
-#        username: ${{ secrets.DOCKERHUB_USERNAME }}
-#        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
+        file: ./Dockerfile
         push: true
         tags: vladimir22/dummy-service:latest
     
