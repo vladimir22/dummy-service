@@ -1,0 +1,44 @@
+## build results: https://github.com/vladimir22/dummy-service/actions/workflows/maven.yml
+name: Java CI with Maven and Docker 
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+ 
+env: ## here my envs
+  IMAGE_NAME: dummy-service
+  
+jobs:
+  build:
+
+    runs-on: self-hosted ## my runner: https://github.com/vladimir22/dummy-service/settings/actions/runners
+    
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+#    - name: Login to DockerHub
+#      uses: docker/login-action@v1 
+#      with:
+#        username: ${{ secrets.DOCKERHUB_USERNAME }}
+#        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: vladimir22/dummy-service:latest
+    
