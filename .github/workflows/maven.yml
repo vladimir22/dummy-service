@@ -35,5 +35,5 @@ jobs:
       with:
         file: ./Dockerfile
         push: true
-        tags: ghcr.io/vladimir22/dummy-service:latest
+        tags: ghcr.io/vladimir22/dummy-service:latest  ## important to specify right host 'ghcr.io' and username otherwise docker.io used !!!
     
