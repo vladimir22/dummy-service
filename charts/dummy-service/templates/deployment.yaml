@@ -23,13 +23,58 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            ## DB Auth
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "dummy-service.fullname" . }}-db
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "dummy-service.fullname" . }}-db
+                  key: POSTGRES_PASSWORD
+
+            ## Infinispan Auth
+            # - name: INFINISPAN_REMOTE_AUTH_USERNAME
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ .Values.infinispan.basicAuthSecretName }}
+            #       key: username
+            # - name: INFINISPAN_REMOTE_AUTH_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ .Values.infinispan.basicAuthSecretName }}
+            #       key: password
+            # ## Infinispan TLS Settings
+            # - name: INFINISPAN_REMOTE_USE_SSL
+            #   value: "true"
+            # - name: INFINISPAN_REMOTE_KEY_STORE_FILE_NAME
+            #   value: "/app/config/pkcs12/keystore.p12"
+            # - name: INFINISPAN_REMOTE_KEY_STORE_TYPE
+            #   value: pkcs12
+            # - name: INFINISPAN_REMOTE_KEY_STORE_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ template "sws-session-manager.fullname" . }}-keystore-creds
+            #       key: password-key
+            # - name: INFINISPAN_REMOTE_TRUST_STORE_FILE_NAME
+            #   value: "/app/config/pkcs12/truststore.p12"
+            # - name: INFINISPAN_REMOTE_TRUST_STORE_TYPE
+            #   value: pkcs12
+            # - name: INFINISPAN_REMOTE_TRUST_STORE_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ template "sws-session-manager.fullname" . }}-keystore-creds
+            #       key: password-key
+
+
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           #livenessProbe:
           #  httpGet:
@@ -39,6 +84,8 @@ spec:
           #  httpGet:
           #    path: /actuator/info
           #    port: http
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
          # volumeMounts:

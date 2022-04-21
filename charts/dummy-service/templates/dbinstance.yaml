@@ -1,0 +1,16 @@
+apiVersion: kci.rocks/v1alpha1
+kind: DbInstance
+metadata:
+  name: {{ include "dummy-service.fullname" . }}-admin-db
+spec:
+  sslConnection:
+    enabled: true
+    skip-verify: true
+  adminSecretRef:
+    Name:  {{ include "dummy-service.fullname" . }}-admin-db
+    Namespace: {{ .Release.Namespace }}
+  engine: postgres
+  generic:
+    host: {{ .Values.db.host }}
+    #publicIp: ""
+    port: 5432

@@ -9,6 +9,7 @@ logging:
     org.springframework.cache: trace
     org.infinispan: error ## 'error' level disables WARN java.net.SocketTimeoutException message raised in first startup because of istio-proxy container.
 
+
 ## HTTP endpoints:
 controller:
   echoserver:
@@ -16,11 +17,11 @@ controller:
   httpclient:
     url: /run
   hotrod:
-    url: /api/v1/hotrod-proxy/{key}
+    url: /hotrod/client/{key}
     cache:
       name: gatewaySessions
   db:
-    url: /db-status
+    url: /db/status
 
 
 ## Infinispan hotrod remote cache settings, details: https://infinispan.org/infinispan-spring-boot/master/spring_boot_starter.html

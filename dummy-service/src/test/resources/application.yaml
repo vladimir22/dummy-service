@@ -16,11 +16,11 @@ controller:
   httpclient:
     url: /run
   hotrod:
-    url: /api/v1/hotrod-proxy/{key}
+    url: /hotrod/client/{key}
     cache:
       name: gatewaySessions
   db:
-    url: /api/v1/db-client/{key}
+    url: /db/status
 
 
 ## infinispan hotrod remote cache settings, details: https://infinispan.org/infinispan-spring-boot/master/spring_boot_starter.html
@@ -43,12 +43,38 @@ spring:
     exclude: "org.springframework.boot.actuate.autoconfigure.metrics.cache.CacheMetricsAutoConfiguration"
   jackson:
     default-property-inclusion: NON_NULL
+#  datasource:
+#    #    url: jdbc:postgresql://<<PG_HOST>>/smdb?sslmode=require
+#    url: jdbc:postgresql://localhost:5432/smdb
+#    username: smdbuser
+#    password: smdbuser123
+#    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.H2Dialect
+    show-sql: false
   datasource:
-    #    url: jdbc:postgresql://<<PG_HOST>>/smdb?sslmode=require
-    url: jdbc:postgresql://localhost:5432/smdb
-    username: smdbuser
-    password: smdbuser123
-    driver-class-name: org.postgresql.Driver
+    #    url: jdbc:postgresql://<<PG_HOST>>/idpdb?sslmode=require
+    #    username: idpdbuser
+    #    password: idpdbuser123
+    #    driver-class-name: org.postgresql.Driver
+
+    ## used in-memory DB instead
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+
 
 ## Hibernate properties for Postgresql
 spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect

@@ -9,6 +9,17 @@ image:
   tag: 0.1.0
   pullPolicy: IfNotPresent
 
+
+db:
+  host: "postgres-db-pg-cluster.pf.svc.cluster.local"
+  adminUsername: "postgres"
+  adminPassword: "postgres"
+  name: "testdb"
+  username: "testdb_user"
+  password: "testdb_password"
+
+
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: "dummy-service"
