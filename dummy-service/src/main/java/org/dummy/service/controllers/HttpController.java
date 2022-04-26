@@ -1,28 +1,55 @@
 package org.dummy.service.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dummy.service.controllers.dto.EchoserverResponse;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @RestController
 @Slf4j
-public class HttpClientController {
+@AllArgsConstructor
+public class HttpController {
 
-  @GetMapping(value = "/status")
-  public String getStatus() {
-    log.info("status check: service is available");
-    return "Service is available";
+  private final ObjectMapper objectMapper;
+
+  @GetMapping(value = "${controller.echoserver.url}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getEchoserverResponse (@RequestBody Optional<String> body, HttpServletRequest request) throws JsonProcessingException {
+
+    Map<String, String> requestHeaders = new HashMap<>();
+    Enumeration headerNames = request.getHeaderNames();
+    while (headerNames.hasMoreElements()) {
+      String key = (String) headerNames.nextElement();
+      String value = request.getHeader(key);
+      requestHeaders.put(key, value);
+    }
+
+    EchoserverResponse echoserverResponse = EchoserverResponse.builder()
+            .requestURI(request.getRequestURI())
+            .requestHeaders(requestHeaders)
+            .body(body.orElse(""))
+            .build();
+
+    log.info("HTTP: echoserverResponse = '{}'", objectMapper.writeValueAsString(echoserverResponse));
+
+    return new ResponseEntity(echoserverResponse, HttpStatus.OK);
   }
 
   @PostMapping(value = "${controller.httpclient.url}")

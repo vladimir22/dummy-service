@@ -1,7 +1,7 @@
 package org.dummy.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.dummy.service.controllers.dto.DbStatus;
+import org.dummy.service.controllers.dto.EchoserverResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class DbControllerTest {
+class HttpControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
@@ -30,22 +29,26 @@ class DbControllerTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    @Value("${controller.db.url}")
+    @Value("${controller.echoserver.url}")
     private String url;
 
     @Test
-    void getStatus() throws Exception {
+    void getEchoserverResponse() throws Exception {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(url)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
+                        .header("test_name", "test_value")
+
                 )
                 .andExpect(status().isOk())
                 .andReturn();
 
         String responseBody = mvcResult.getResponse().getContentAsString();
-        DbStatus dbStatus = objectMapper.readValue(responseBody, DbStatus.class);
+        EchoserverResponse echoserverResponse = objectMapper.readValue(responseBody, EchoserverResponse.class);
 
-        assertThat(dbStatus.isValid(), equalTo(true));
+        assertThat(echoserverResponse.getRequestURI(), equalTo(url));
+        assertThat(echoserverResponse.getRequestHeaders().get("test_name"), equalTo("test_value"));
     }
+
 }

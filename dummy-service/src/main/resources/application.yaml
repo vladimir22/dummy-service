@@ -21,7 +21,7 @@ controller:
     cache:
       name: gatewaySessions
   db:
-    url: /db/status
+    url: /db
 
 
 ## Infinispan hotrod remote cache settings, details: https://infinispan.org/infinispan-spring-boot/master/spring_boot_starter.html

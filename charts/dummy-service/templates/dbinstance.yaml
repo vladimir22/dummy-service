@@ -1,16 +1,18 @@
+{{- if .Capabilities.APIVersions.Has "kci.rocks/v1alpha1" }}
 apiVersion: kci.rocks/v1alpha1
 kind: DbInstance
 metadata:
-  name: {{ include "dummy-service.fullname" . }}-admin-db
+  name: {{ include "dummy-service.fullname" . }}
 spec:
   sslConnection:
     enabled: true
     skip-verify: true
   adminSecretRef:
-    Name:  {{ include "dummy-service.fullname" . }}-admin-db
+    Name:  {{ include "dummy-service.fullname" . }}-db-admin
     Namespace: {{ .Release.Namespace }}
   engine: postgres
   generic:
     host: {{ .Values.db.host }}
     #publicIp: ""
-    port: 5432
+    port: {{ .Values.db.port }}
+{{- end }}

@@ -4,20 +4,44 @@
 
 replicaCount: 1
 
-image:
-  repository: docker.io/vvilc/dummy-service
-  tag: 0.1.0
-  pullPolicy: IfNotPresent
+ingress:
+  host: localhost
+  path: /dummy-service
 
+image:
+  repository: ghcr.io/vladimir22/dummy-service
+  tag: latest
+  pullPolicy: Always
 
 db:
+  ## DbInstance settings (db admin)
   host: "postgres-db-pg-cluster.pf.svc.cluster.local"
+  port: "5432"  
   adminUsername: "postgres"
   adminPassword: "postgres"
+  ## Database settings (db user)
   name: "testdb"
   username: "testdb_user"
   password: "testdb_password"
+  jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.name }}"
 
+infinispan:
+  username: "infinispan_username"
+  password: "infinispan_password"
+  passwordKey: "infinispan_password-key"
+
+
+controller:
+  echoserver:
+    url: /dummy-service/echo
+  httpclient:
+    url: /dummy-service/http
+  hotrod:
+    url: /dummy-service/hotrod/{key}
+    cache:
+      name: gatewaySessions
+  db:
+    url: /dummy-service/db
 
 
 imagePullSecrets: []
@@ -47,6 +71,7 @@ securityContext:
 service:
   type: ClusterIP
   port: 8080
+  targetPort: 8282
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
