@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  fqdnSuffix: .svc.cluster.local
+
 replicaCount: 1
 
 ingress:
@@ -26,10 +29,11 @@ db:
   jdbcUrl: "jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.name }}"
 
 infinispan:
-  username: "infinispan_username"
-  password: "infinispan_password"
-  passwordKey: "infinispan_password-key"
+  username: "appuser"
+  password: "appuser123"
 
+keystore:
+  password: my-keystore-password
 
 controller:
   echoserver:

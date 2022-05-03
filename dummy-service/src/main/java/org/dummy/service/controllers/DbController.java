@@ -34,8 +34,6 @@ public class DbController {
                 .username(dataSourceProperties.getUsername())
                 .password(hidePassword(dataSourceProperties.getPassword()))
                 .build();
-
-        boolean isValid = false;
         try {
             dbStatus.setValid(dataSource.getConnection().isValid(1000));
         } catch (SQLException e) {

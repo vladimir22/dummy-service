@@ -17,7 +17,7 @@ controller:
   httpclient:
     url: /run
   hotrod:
-    url: /hotrod/client/{key}
+    url: /hotrod
     cache:
       name: gatewaySessions
   db:

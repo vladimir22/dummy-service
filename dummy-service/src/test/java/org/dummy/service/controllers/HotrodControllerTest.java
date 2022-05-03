@@ -56,7 +56,7 @@ class HotrodControllerTest {
     String value = "test_value";
 
     // get empty value
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(APP_URL.replace("{key}", key))
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(APP_URL + "/" + key )
             .contentType(MediaType.TEXT_PLAIN_VALUE)
             .accept(MediaType.TEXT_PLAIN_VALUE)
     )
@@ -66,7 +66,7 @@ class HotrodControllerTest {
     assertThat(responseBody, emptyOrNullString());
 
     // set value
-    mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(APP_URL.replace("{key}", key))
+    mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(APP_URL + "/" + key )
             .contentType(MediaType.TEXT_PLAIN_VALUE)
             .accept(MediaType.TEXT_PLAIN_VALUE)
             .content(value)
@@ -77,7 +77,7 @@ class HotrodControllerTest {
     assertThat(responseBody, emptyOrNullString());
 
     // get value
-    mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(APP_URL.replace("{key}", key))
+    mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(APP_URL + "/" + key )
             .contentType(MediaType.TEXT_PLAIN_VALUE)
             .accept(MediaType.TEXT_PLAIN_VALUE)
     )
@@ -87,7 +87,7 @@ class HotrodControllerTest {
     assertThat(responseBody, equalTo(value));
 
     // delete value
-    mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(APP_URL.replace("{key}", key))
+    mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(APP_URL + "/" + key )
             .contentType(MediaType.TEXT_PLAIN_VALUE)
             .accept(MediaType.TEXT_PLAIN_VALUE)
             .content(value)
@@ -98,7 +98,7 @@ class HotrodControllerTest {
     assertThat(responseBody, emptyOrNullString());
 
     // delete empty value
-    mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(APP_URL.replace("{key}", key))
+    mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(APP_URL + "/" + key )
             .contentType(MediaType.TEXT_PLAIN_VALUE)
             .accept(MediaType.TEXT_PLAIN_VALUE)
     )

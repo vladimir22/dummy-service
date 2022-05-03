@@ -1,5 +1,6 @@
 package org.dummy.service.cache;
 
+import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.infinispan.client.hotrod.RemoteCache;
@@ -18,6 +19,7 @@ public class HotRodCache {
   private RemoteCache<String, Object> cache;
 
   @Value("${controller.hotrod.cache.name}")
+  @Getter
   private String cacheName;
 
 

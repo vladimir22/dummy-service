@@ -72,7 +72,7 @@ spec:
             - name: INFINISPAN_REMOTE_KEY_STORE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "dummy-service.fullname" . }}-infinispan-keystore
+                  name: {{ include "dummy-service.fullname" . }}-keystore-creds
                   key: password-key
             - name: INFINISPAN_REMOTE_TRUST_STORE_FILE_NAME
               value: "/app/config/pkcs12/truststore.p12"
@@ -81,7 +81,7 @@ spec:
             - name: INFINISPAN_REMOTE_TRUST_STORE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "dummy-service.fullname" . }}-infinispan-keystore
+                  name: {{ include "dummy-service.fullname" . }}-keystore-creds
                   key: password-key
 
 
@@ -101,10 +101,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-         # volumeMounts:
-         #   - name: {{ include "dummy-service.fullname" . }}
-         #     mountPath: /etc/nginx/conf.d/default.conf
-         #     subPath: default.conf
+
+          volumeMounts:
+          - mountPath: /app/config/pkcs12
+            name: pkcs12-keystore
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -117,7 +118,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-     # volumes:
-     #   - name: {{ include "dummy-service.fullname" . }}
-     #     configMap:
-     #       name: {{ include "dummy-service.fullname" . }}
+      volumes:
+      - name: pkcs12-keystore
+        secret:
+          secretName: {{ include "dummy-service.fullname" . }}-keystore
