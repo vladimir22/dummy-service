@@ -1,5 +1,4 @@
-## build results: https://github.com/vladimir22/dummy-service/actions/workflows/maven.yml
-name: Java CI with Maven and Docker 
+name: Build
 
 on:
   push:
@@ -35,5 +34,5 @@ jobs:
       with:
         file: ./Dockerfile
         push: true
-        tags: ghcr.io/vladimir22/dummy-service:latest  ## important to specify right host 'ghcr.io' and username otherwise docker.io used !!!
+        tags: ghcr.io/vladimir22/dummy-service:latest,ghcr.io/vladimir22/dummy-service:${{ github.event.release.tag_name }} ## important to specify right host 'ghcr.io' and username otherwise docker.io used !!!
     
