@@ -1,14 +1,12 @@
 name: Release Charts
 
-
+## Wait for docker build
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+  workflow_run:
+    workflows: ["Build"]
+    branches: [main]
+    types:
+      - completed
 
 jobs:
   chart-release:
