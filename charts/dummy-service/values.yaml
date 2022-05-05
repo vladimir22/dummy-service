@@ -15,7 +15,6 @@ image:
   repository: ghcr.io/vladimir22/dummy-service
   tag: latest
   pullPolicy: Always
-
 db:
   ## DbInstance settings (db admin)
   host: "postgres-db-pg-cluster.pf.svc.cluster.local"
