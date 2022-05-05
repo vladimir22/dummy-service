@@ -28,7 +28,7 @@ jobs:
         uses: azure/setup-helm@v1
         with:
           version: v3.4.1
-
+      ## upload chart into the 'gh-charts' branch by default: https://github.com/helm/chart-releaser-action#pre-requisites
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         env:
