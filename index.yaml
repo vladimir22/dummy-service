@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   dummy-service:
   - apiVersion: v1
+    appVersion: 1.0.1
+    created: "2022-05-05T16:50:43.545532619Z"
+    description: dummy-service
+    digest: f6f634b747e239f0b0f9819db0e253ac46f37deffcbef9b70f4f454da87becdb
+    name: dummy-service
+    type: application
+    urls:
+    - https://github.com/vladimir22/dummy-service/releases/download/dummy-service-1.0.1/dummy-service-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v1
     appVersion: 0.0.1
     created: "2022-05-05T16:08:16.81387622Z"
     description: dummy-service
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://github.com/vladimir22/dummy-service/releases/download/dummy-service-0.0.1/dummy-service-0.0.1.tgz
     version: 0.0.1
-generated: "2022-05-05T16:08:16.81388342Z"
+generated: "2022-05-05T16:50:43.545544919Z"
