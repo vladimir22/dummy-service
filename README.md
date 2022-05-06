@@ -18,8 +18,7 @@ echo "DB_PASSWORD=$DB_PASSWORD"
 
 ### - Install `dummy-service`
 ```sh
-## Install dummy-service
-## https://vladimir22.github.io/dummy-service/index.yaml
+## Install dummy-service helm chart: https://vladimir22.github.io/dummy-service/index.yaml
 helm repo add vladimir22 https://vladimir22.github.io/dummy-service
 HELM_VERSION=1.0.2
 helm repo update vladimir22
@@ -44,7 +43,7 @@ curl http://localhost:8081/dummy-service/db
 ```
 
 ### - HTTP Client
-`dummy-service` has its own *HTTP Client* which can be configured using REST API. 
+`dummy-service` has its own *HTTP Client* which can be configured using REST API. Example:
 ```
 ## Ask dummy-service to send 10 parallel requests to specfied url
 curl http://localhost:8081/dummy-service/http -X POST -d "url=http://google.com" -d "threads=10"
