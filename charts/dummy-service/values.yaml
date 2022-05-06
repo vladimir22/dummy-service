@@ -36,7 +36,7 @@ controller:
   httpclient:
     url: /dummy-service/http
   hotrod:
-    url: /dummy-service/hotrod/{key}
+    url: /dummy-service/hotrod
     cache:
       name: gatewaySessions
   db:
