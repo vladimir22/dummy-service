@@ -3,7 +3,8 @@ Spring Boot microservice which is helpful for testing and debugging
 
 
 ## Tips how to install
-
+### - Resolve DB Credentials
+`dummy-service` helm chart includes optional [dbinstance](https://github.com/kloeckner-i/db-operator/blob/master/docs/creatinginstances.md#genericdbinstance) and [database](https://github.com/kloeckner-i/db-operator/blob/master/docs/creatingdatabases.md#creatingdatabases) objects which are managed by [db-operator](https://github.com/kloeckner-i/db-operator#to-install-db-operator-with-helm)
 ```sh
 ## Reslove DB Credentials
 DB_HOST=postgres-db-pg-cluster.pf.svc.cluster.local

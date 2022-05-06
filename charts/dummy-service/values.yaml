@@ -30,6 +30,7 @@ infinispan:
 keystore:
   password: my-keystore-password
 
+## Specify Endpoints
 controller:
   echoserver:
     url: /dummy-service/echo
