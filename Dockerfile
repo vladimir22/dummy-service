@@ -1,24 +1,21 @@
 # Build with Maven
-FROM dig-grid-artifactory.apps.ge.com/virtual-docker/bsf/maven-builder:3.0.1-jdk-11 AS builder
 FROM maven:3-openjdk-11 AS builder
-
-ARG ARTIFACTORY_USR
-ARG ARTIFACTORY_PSW
-
 
 COPY dummy-service /src
 WORKDIR /src
-RUN mvn clean install \
-    -DartifactoryUsr=${ARTIFACTORY_USR} \
-    -DartifactoryPsw=${ARTIFACTORY_PSW} \
-    -Dmaven.test.failure.ignore=true
+RUN mvn clean install
 
-FROM builder AS tester
-ARG ARTIFACTORY_USR
-ARG ARTIFACTORY_PSW
-RUN mvn surefire-report:report-only  \
-   -DartifactoryUsr=${ARTIFACTORY_USR} \
-   -DartifactoryPsw=${ARTIFACTORY_PSW}
+#RUN mvn clean install \
+#    -DartifactoryUsr=${ARTIFACTORY_USR} \
+#    -DartifactoryPsw=${ARTIFACTORY_PSW} \
+#    -Dmaven.test.failure.ignore=true
+
+#FROM builder AS tester
+#ARG ARTIFACTORY_USR
+#ARG ARTIFACTORY_PSW
+#RUN mvn surefire-report:report-only  \
+#   -DartifactoryUsr=${ARTIFACTORY_USR} \
+#   -DartifactoryPsw=${ARTIFACTORY_PSW}
 
 FROM builder AS publisher
 
