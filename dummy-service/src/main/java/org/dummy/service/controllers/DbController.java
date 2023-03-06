@@ -42,7 +42,6 @@ public class DbController {
             dbStatus.setErrorMessage(e.getMessage());
         }
 
-
         log.info("DB status check: dbStatus = '{}'", objectMapper.writeValueAsString(dbStatus));
         return new ResponseEntity(dbStatus, HttpStatus.OK);
     }

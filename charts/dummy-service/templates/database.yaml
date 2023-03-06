@@ -1,3 +1,4 @@
+{{- if .Values.db.adminPassword }}
 {{- if .Capabilities.APIVersions.Has "kci.rocks/v1alpha1" }}
 apiVersion: kci.rocks/v1alpha1
 kind: Database
@@ -11,4 +12,4 @@ spec:
     enable: false # turn it to true when you want to use back up feature. currently only support postgres
     cron: "0 0 * * *"
 {{- end }}
-
+{{- end }}

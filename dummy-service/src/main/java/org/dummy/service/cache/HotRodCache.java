@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class HotRodCache {
 
   @Setter
-  @Autowired
   private RemoteCacheManager remoteCacheManager;
   private RemoteCache<String, Object> cache;
 
@@ -25,6 +23,8 @@ public class HotRodCache {
 
   public RemoteCache<String, Object> getCache() {
     if ( cache == null ) {
+
+      remoteCacheManager = new RemoteCacheManager();
       cache = remoteCacheManager.getCache(cacheName);
     }
     return cache;

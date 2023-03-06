@@ -16,7 +16,7 @@ db:
   host: "postgres-db-pg-cluster.pf.svc.cluster.local"
   port: "5432"  
   adminUsername: "postgres"
-  adminPassword: "postgres"
+  #adminPassword: "postgres"
   ## Database settings (db user)
   name: "testdb"
   username: "testdb_user"

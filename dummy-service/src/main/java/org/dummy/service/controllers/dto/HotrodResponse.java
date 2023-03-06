@@ -1,7 +1,6 @@
 package org.dummy.service.controllers.dto;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

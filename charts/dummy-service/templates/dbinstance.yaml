@@ -1,3 +1,4 @@
+{{- if .Values.db.adminPassword }}
 {{- if .Capabilities.APIVersions.Has "kci.rocks/v1alpha1" }}
 apiVersion: kci.rocks/v1alpha1
 kind: DbInstance
@@ -15,4 +16,5 @@ spec:
     host: {{ .Values.db.host }}
     #publicIp: ""
     port: {{ .Values.db.port }}
+{{- end }}
 {{- end }}
