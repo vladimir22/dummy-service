@@ -1,5 +1,5 @@
 # Build with Maven
-FROM maven:3-openjdk-11 AS builder
+FROM maven:3-openjdk-17 AS builder
 
 COPY dummy-service /src
 WORKDIR /src
@@ -22,7 +22,7 @@ FROM builder AS publisher
 #
 # Deploy the compiled JAR file to a plain JRE image
 #
-FROM amazoncorretto:11 AS production
+FROM amazoncorretto:17 AS production
 #FROM dig-grid-artifactory.apps.ge.com/base-images-docker/java-jre-corretto:8.4-208.11.0.12.7.1 AS production
 #USER root
 #RUN microdnf install shadow-utils && \
