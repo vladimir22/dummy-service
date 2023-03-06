@@ -92,7 +92,6 @@ management.endpoints.web.exposure.include: prometheus, health, caches, info
 ## Actuator Metrics configuration, is used to collect metrics, URL: http://sws-login-app-server/actuator/prometheus
 management.endpoint.metrics.enabled: true
 management.endpoint.prometheus.enabled: true
-management.metrics.export.prometheus.enabled: true
 ## Actuator Health configuration, is used to readiness probe, URL: http://sws-login-app-server/actuator/health
 management.endpoint.health.enabled: true
 management.endpoint.health.show-details: never
@@ -103,4 +102,8 @@ management.endpoint.caches.enabled: true
 management.endpoint.info.enabled: true
 management.info.defaults.enabled: false
 management.health.db.enabled: false
-
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true

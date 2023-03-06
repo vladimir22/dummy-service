@@ -5,7 +5,7 @@ Spring Boot microservice which is helpful for testing and debugging
 ## Tips how to install
 
 
-### - Install db-operator: https://github.com/kloeckner-i/db-operator#quickstart
+### - Install [db-operator](https://github.com/kloeckner-i/db-operator#quickstart)
 ```sh
 VERSION=1.5.1
 NS=db-oper
