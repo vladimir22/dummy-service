@@ -2,8 +2,28 @@
 Spring Boot microservice which is helpful for testing and debugging
 
 
-## Tips how to install
+## How To Build and Push Image
 
+- Add self-hosted github runner:  https://github.com/vladimir22/dummy-service/settings/actions/runners
+- run runner
+```sh
+## Download self-hosted github runner:  https://github.com/vladimir22/dummy-service/settings/actions/runners
+cd actions-runner
+
+## Optional: re-init runner setting
+rm -rf .runner
+./config.sh
+
+## Run self-hosted runner
+./run.sh
+  √ Connected to GitHub
+
+
+## Check action statuses: https://github.com/vladimir22/dummy-service/actions
+```
+
+
+## Tips how to install
 
 ### - Install [db-operator](https://github.com/kloeckner-i/db-operator#quickstart)
 ```sh
