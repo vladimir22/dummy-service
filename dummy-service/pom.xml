@@ -21,8 +21,8 @@
     <properties>
         <java.version>17</java.version>
         <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
-        <infinispan.test.version>12.1.7.Final</infinispan.test.version>
-        <infinispan.bom.version>12.1.7.Final</infinispan.bom.version>
+        <infinispan.test.version>14.0.6.Final</infinispan.test.version>
+        <infinispan.bom.version>14.0.6.Final</infinispan.bom.version>
     </properties>
 
     <dependencies>
