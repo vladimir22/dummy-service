@@ -149,7 +149,7 @@ echo "DB_PASSWORD=$DB_ADMIN_PASSWORD"
 ```sh
 ## Install dummy-service helm chart: https://vladimir22.github.io/dummy-service/index.yaml
 helm repo add vladimir22 https://vladimir22.github.io/dummy-service
-HELM_VERSION=1.0.2
+HELM_VERSION=1.0.3
 NS=ds
 kubectl create ns $NS
 helm repo update vladimir22
@@ -162,7 +162,7 @@ DB_NAME=testdb
 DB_USER_NAME=testuser
 DB_USER_PASSWORD=$(kubectl get secret -n $SITEA_NS "$DB_USER_NAME.$SITEA_NAME.credentials.postgresql.acid.zalan.do" -o jsonpath='{.data.password}' | base64 --decode)
 echo -e "Installing dummy-service:\n  DB_HOST=$DB_HOST\n  DB_USER_NAME=$DB_USER_NAME\n  DB_USER_PASSWORD=$DB_USER_PASSWORD"
-helm install ds -n $NS vladimir22/dummy-service --version $HELM_VERSION --set db.host=$DB_HOST --set db.name=$DB_ADMIN_USERNAME --set db.username=$DB_USER_NAME --set db.password=$DB_USER_PASSWORD
+helm install ds -n $NS vladimir22/dummy-service --version $HELM_VERSION --set db.host="$DB_HOST" --set db.name=$DB_ADMIN_USERNAME --set db.username=$DB_USER_NAME --set db.password=$DB_USER_PASSWORD
 
 
 ```
