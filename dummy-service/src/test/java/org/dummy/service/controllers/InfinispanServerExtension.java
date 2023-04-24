@@ -11,7 +11,6 @@ import org.infinispan.server.hotrod.HotRodServer;
 import org.infinispan.server.hotrod.configuration.HotRodServerConfiguration;
 import org.infinispan.server.hotrod.configuration.HotRodServerConfigurationBuilder;
 import org.infinispan.server.hotrod.test.HotRodTestingUtil;
-import org.infinispan.test.fwk.TestCacheManagerFactory;
 import org.junit.jupiter.api.extension.*;
 
 import java.util.stream.Stream;
@@ -104,15 +103,17 @@ public class InfinispanServerExtension implements BeforeAllCallback, AfterAllCal
 
   public void start() {
     if (hotRodServer == null) {
-      TestResourceTracker.setThreadTestName("InfinispanServer");
-      ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-      EmbeddedCacheManager ecm = TestCacheManagerFactory.createCacheManager(
-              new GlobalConfigurationBuilder().nonClusteredDefault().defaultCacheName(cacheName),
-              configurationBuilder);
-
-      HotRodServerConfigurationBuilder serverBuilder = new HotRodServerConfigurationBuilder();
-      serverBuilder.adminOperationsHandler(new EmbeddedServerAdminOperationHandler());
-      hotRodServer = HotRodTestingUtil.startHotRodServer(ecm, host, port, serverBuilder);
+//      TestResourceTracker.setThreadTestName("InfinispanServer");
+//      ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+//
+//
+//      EmbeddedCacheManager ecm = TestCacheManagerFactory.createCacheManager(
+//              new GlobalConfigurationBuilder().nonClusteredDefault().defaultCacheName(cacheName),
+//              configurationBuilder);
+//
+//      HotRodServerConfigurationBuilder serverBuilder = new HotRodServerConfigurationBuilder();
+//      serverBuilder.adminOperationsHandler(new EmbeddedServerAdminOperationHandler());
+//      hotRodServer = HotRodTestingUtil.startHotRodServer(ecm, host, port, serverBuilder);
     }
   }
 
