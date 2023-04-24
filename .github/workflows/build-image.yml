@@ -35,6 +35,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Build with Maven ## runs the Maven package target in non-interactive mode to ensure that your code builds, tests pass, and a package can be created.
+      run: mvn --batch-mode -DskipTests package
+
     - name: Test
       run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
