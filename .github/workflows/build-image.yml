@@ -3,6 +3,8 @@ name: Build Image
 on:
   push:
     branches: [ main ]
+    tags:
+      - "v*.*.*"
   pull_request:
     branches: [ main ]
 
@@ -16,7 +18,7 @@ permissions: ## https://docs.github.com/en/actions/using-jobs/assigning-permissi
   #issues: write
   #pull-requests: write
   checks: write  ## fixed an Error: HttpError: Resource not accessible by integration: https://github.com/dorny/test-reporter/issues/149#issuecomment-1004820190
-  packages: write
+  packages: write ## fixed an Error: failed to push ghcr.io/vladimir22/dummy-service:latest: unexpected status: 403 Forbidden
 
   
 jobs:
@@ -56,6 +58,25 @@ jobs:
         reporter: java-junit
         fail-on-error: true
 
+    - name: Docker meta ## https://docs.docker.com/build/ci/github-actions/manage-tags-labels/
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        # list of Docker images to use as base name for tags
+        images: |
+          vladimir22/dummy-service
+          ghcr.io/vladimir22/dummy-service
+        # generate Docker tags based on the following events/attributes
+        tags: |
+          type=schedule
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
+          type=sha
+            
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1 ## https://github.com/qemu/qemu#qemu-readme
 
@@ -68,6 +89,15 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }} ## https://github.com/settings/tokens
         password: ${{ secrets.GITHUB_TOKEN }} ## https://github.com/vladimir22/dummy-service/settings/secrets/actions
+
+
+
+
+
+
+
+
+
 
     - name: Build and push
       uses: docker/build-push-action@v2
