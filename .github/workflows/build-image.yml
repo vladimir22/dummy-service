@@ -16,14 +16,12 @@ permissions: ## https://docs.github.com/en/actions/using-jobs/assigning-permissi
   #issues: write
   #pull-requests: write
   checks: write  ## fixed an Error: HttpError: Resource not accessible by integration: https://github.com/dorny/test-reporter/issues/149#issuecomment-1004820190
+  packages: write
 
   
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
 
     ## My runner is self-hosted: https://github.com/vladimir22/dummy-service/settings/actions/runners
     #runs-on: self-hosted ## run it locally: ~/actions-runner/run.sh
