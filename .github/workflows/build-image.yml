@@ -22,6 +22,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
 
     ## My runner is self-hosted: https://github.com/vladimir22/dummy-service/settings/actions/runners
     #runs-on: self-hosted ## run it locally: ~/actions-runner/run.sh
