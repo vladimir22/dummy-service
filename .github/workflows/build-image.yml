@@ -38,18 +38,21 @@ jobs:
     - name: Maven Build ## runs the Maven package target in non-interactive mode to ensure that your code builds, tests pass, and a package can be created.
       run: |
         pwd
-        cd dummy-service 
+        cd dummy-service
         mvn --batch-mode -DskipTests package
 
-    - name: Test
-      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+    - name: Maven Test
+      run: |
+        pwd
+        cd dummy-service
+        mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
     - name: Report ## https://octopus.com/blog/githubactions-running-unit-tests
       uses: dorny/test-reporter@v1
       if: always() ## generate the report even if the Test step above was set to fail in the event of failed tests.
       with:
         name: Maven Tests
-        path: target/surefire-reports/*.xml
+        path: dummy-service/target/surefire-reports/*.xml
         reporter: java-junit
         fail-on-error: true
 
