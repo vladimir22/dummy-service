@@ -25,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    ## My runner is self-hosted: https://github.com/vladimir22/dummy-service/settings/actions/runners
+    ## self-hosted run: https://github.com/vladimir22/dummy-service/settings/actions/runners
     #runs-on: self-hosted ## run it locally: ~/actions-runner/run.sh
 
     steps:
@@ -49,18 +49,18 @@ jobs:
         cd dummy-service
         mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
-    - name: Report ## https://octopus.com/blog/githubactions-running-unit-tests
-      uses: dorny/test-reporter@v1
-      if: always() ## generate the report even if the Test step above was set to fail in the event of failed tests.
+    - name: Test Report
+      uses: dorny/test-reporter@v1 ## https://octopus.com/blog/githubactions-running-unit-tests
+      if: always() ## Generate the report even if the Test step above was set to fail in the event of failed tests.
       with:
         name: Maven Tests
         path: dummy-service/target/surefire-reports/*.xml
         reporter: java-junit
         fail-on-error: true
 
-    - name: Docker meta ## https://docs.docker.com/build/ci/github-actions/manage-tags-labels/
+    - name: Get Docker Metadata 
       id: meta
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v4 ## https://docs.docker.com/build/ci/github-actions/manage-tags-labels/
       with:
         # list of Docker images to use as base name for tags
         images: |
@@ -74,8 +74,7 @@ jobs:
           type=semver,pattern={{major}}.{{minor}}
           type=semver,pattern={{major}}
           type=sha
-            
-
+   
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1 ## https://github.com/qemu/qemu#qemu-readme
 
