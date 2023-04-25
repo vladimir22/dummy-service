@@ -91,18 +91,12 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }} ## https://github.com/vladimir22/dummy-service/settings/secrets/actions
 
 
-
-
-
-
-
-
-
-
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
         file: ./Dockerfile
-        push: true
-        tags: ghcr.io/vladimir22/dummy-service:latest ## important to specify right host 'ghcr.io' and username otherwise docker.io used !!!
-    
+        #push: true
+        #tags: ghcr.io/vladimir22/dummy-service:latest ## important to specify right host 'ghcr.io' and username otherwise docker.io used !!!
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
